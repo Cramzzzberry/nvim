@@ -308,16 +308,6 @@ require('lazy').setup({
     end,
   },
 
-  --[[ {
-    'luisiacc/gruvbox-baby',
-    name = 'gruvbox-baby',
-    priority = 1000,
-    config = function()
-      -- setup must be called before loading
-      vim.cmd.colorscheme 'gruvbox-baby'
-    end,
-  }, ]]
-
   {
     'ellisonleao/gruvbox.nvim',
     priority = 1000,
@@ -344,7 +334,7 @@ require('lazy').setup({
         palette_overrides = {},
         overrides = {},
         dim_inactive = false,
-        transparent_mode = false,
+        transparent_mode = true,
       }
       vim.o.background = 'dark' -- or "light" for light mode
       vim.cmd 'colorscheme gruvbox'
