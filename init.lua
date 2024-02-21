@@ -44,6 +44,9 @@ P.S. You can delete this when you're done too. It's your config now :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Relative line number
+vim.wo.relativenumber = true
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -200,7 +203,7 @@ require('lazy').setup({
     },
   },
 
-  {
+  --[[ {
     -- Theme inspired by Atom
     'navarasu/onedark.nvim',
     priority = 1000,
@@ -212,7 +215,7 @@ require('lazy').setup({
       }
       require('onedark').load()
     end,
-  },
+  }, ]]
 
   {
     -- Set lualine as statusline
@@ -266,10 +269,118 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
+      'windwp/nvim-ts-autotag',
     },
     build = ':TSUpdate',
   },
 
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('oil').setup {
+        default_file_explorer = true,
+        keymaps = {
+          ['<esc>'] = 'actions.close',
+          ['<bs>'] = 'actions.parent',
+        },
+      }
+
+      -- Open Oil nvim
+      vim.keymap.set('n', '<C-e>', '<CMD>Oil --float<CR>', { desc = 'Toggles Oil nvim' })
+    end,
+  },
+
+  { 'tiagovla/scope.nvim' },
+
+  {
+    -- Terminal plugin
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    config = function()
+      require('toggleterm').setup {}
+
+      -- Toggle terminal
+      vim.keymap.set('n', '<A-t>', '<CMD>ToggleTerm dir=%:p:h direction=float<CR>', { desc = 'Toggle the toggle terminal' })
+      vim.keymap.set('t', '<esc>', '<CMD>ToggleTerm<CR>', { desc = 'Toggle the toggle terminal' })
+    end,
+  },
+
+  {
+    -- Catppuccin theme
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    config = function()
+      require('catppuccin').setup()
+
+      -- setup must be called before loading
+      vim.cmd.colorscheme 'catppuccin-mocha'
+    end,
+  },
+
+  {
+    -- Alpha
+    'goolord/alpha-nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('alpha').setup(require('alpha.themes.startify').config)
+
+      vim.keymap.set('n', '<C-a>', '<CMD>Alpha<CR>', { noremap = true })
+    end,
+  },
+
+  {
+    'romgrk/barbar.nvim',
+    dependencies = {
+      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+    },
+    init = function()
+      vim.g.barbar_auto_setup = false
+    end,
+    opts = {
+      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+      animation = true,
+      -- insert_at_start = true,
+      -- …etc.
+    },
+
+    version = '^1.0.0', -- optional: only update when a new 1.x version is released
+  },
+
+  -- Formatter
+  {
+    'stevearc/conform.nvim',
+    opts = {},
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      require('conform').setup {
+        formatters_by_ft = {
+          lua = { 'stylua' },
+          vue = { 'prettier' },
+          javascript = { 'prettier' },
+          typescript = { 'prettier' },
+          html = { 'prettier' },
+        },
+        format_on_save = {
+          -- I recommend these options. See :help conform.format for details.
+          lsp_fallback = false,
+          timeout_ms = 500,
+          async = false,
+        },
+      }
+    end,
+  },
+
+  -- Auto pair
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    opts = {}, -- this is equalent to setup({}) function
+  },
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -325,6 +436,9 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
+
+-- Show tabs by default
+vim.o.showtabline = 2
 
 -- [[ Basic Keymaps ]]
 
@@ -424,7 +538,7 @@ local function telescope_live_grep_open_files()
 end
 vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files, { desc = '[S]earch [/] in Open Files' })
 vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin, { desc = '[S]earch [S]elect Telescope' })
-vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
+--[[ vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' }) ]]
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
@@ -449,6 +563,9 @@ vim.defer_fn(function()
     ignore_install = {},
     -- You can specify additional Treesitter modules here: -- For example: -- playground = {--enable = true,-- },
     modules = {},
+    autotag = {
+      enable = true,
+    },
     highlight = { enable = true },
     indent = { enable = true },
     incremental_selection = {
@@ -537,8 +654,8 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  nmap('<C-d>', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('<C-f>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -549,9 +666,9 @@ local on_attach = function(_, bufnr)
   end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+  --[[ vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
+  end, { desc = 'Format current buffer with LSP' }) ]]
 end
 
 -- document existing key chains
@@ -680,5 +797,57 @@ cmp.setup {
   },
 }
 
+-- My Custom Basic Keymaps
+
+-- Buffer keymaps
+vim.keymap.set('n', '<S-tab>', '<CMD>BufferPrevious<CR>')
+vim.keymap.set('n', '<tab>', '<CMD>BufferNext<CR>')
+vim.keymap.set('n', '<A-c>', '<CMD>BufferClose<CR>')
+vim.keymap.set('n', '<A-1>', '<CMD>BufferGoto 1<CR>')
+vim.keymap.set('n', '<A-2>', '<CMD>BufferGoto 2<CR>')
+vim.keymap.set('n', '<A-3>', '<CMD>BufferGoto 3<CR>')
+vim.keymap.set('n', '<A-4>', '<CMD>BufferGoto 4<CR>')
+vim.keymap.set('n', '<A-5>', '<CMD>BufferGoto 5<CR>')
+vim.keymap.set('n', '<A-6>', '<CMD>BufferGoto 6<CR>')
+vim.keymap.set('n', '<A-7>', '<CMD>BufferGoto 7<CR>')
+vim.keymap.set('n', '<A-8>', '<CMD>BufferGoto 8<CR>')
+vim.keymap.set('n', '<A-9>', '<CMD>BufferGoto 9<CR>')
+vim.keymap.set('n', '<A-0>', '<CMD>BufferLast<CR>')
+vim.keymap.set('n', '<A-<>', '<CMD>BufferMovePrevious<CR>')
+vim.keymap.set('n', '<A->>', '<CMD>BufferMoveNext<CR>')
+
+--Window navigation
+vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Go to the left window', noremap = true })
+vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Go to the right window', noremap = true })
+vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Go to the top window', noremap = true })
+vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Go to the bottom window', noremap = true })
+
+-- Vertical Navigations
+vim.keymap.set('n', 'J', '<C-d>zz', { desc = 'Go half screen down and center the cursor', noremap = true })
+vim.keymap.set('n', 'K', '<C-u>zz', { desc = 'Go half screen up and center the cursor', noremap = true })
+
+-- Fugitive
+vim.keymap.set('n', '<leader>gs', '<CMD>Gedit :<CR>', { desc = '[G]it [S]ummary', noremap = true })
+vim.keymap.set('n', '<leader>gP', '<CMD>Git push<CR>', { desc = '[G]it [P]ush', noremap = true })
+vim.keymap.set('n', '<leader>gp', '<CMD>Git pull<CR>', { desc = '[G]it [P]ull', noremap = true })
+vim.keymap.set('n', '<leader>ga', '<CMD>Git add %<CR>', { desc = '[G]it [A]dd: Stage the current file', noremap = true })
+
+-- Move highlighted code/s
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv") -- Shift visual selected line down
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv") -- Shift visual selected line up
+
+-- Remapping start and end of line motions
+vim.keymap.set({ 'n', 'v' }, '$', '0') -- Shift visual selected line down
+vim.keymap.set({ 'n', 'v' }, '0', '$') -- Shift visual selected line down
+
+-- My Custom Autocommands
+
+-- Format Code on write/save
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*',
+  callback = function(args)
+    require('conform').format { bufnr = args.buf }
+  end,
+})
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
