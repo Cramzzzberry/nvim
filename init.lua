@@ -308,17 +308,48 @@ require('lazy').setup({
     end,
   },
 
-  {
-    -- Catppuccin theme
-    'catppuccin/nvim',
-    name = 'catppuccin',
+  --[[ {
+    'luisiacc/gruvbox-baby',
+    name = 'gruvbox-baby',
     priority = 1000,
     config = function()
-      require('catppuccin').setup()
-
       -- setup must be called before loading
-      vim.cmd.colorscheme 'catppuccin-mocha'
+      vim.cmd.colorscheme 'gruvbox-baby'
     end,
+  }, ]]
+
+  {
+    'ellisonleao/gruvbox.nvim',
+    priority = 1000,
+    config = function()
+      require('gruvbox').setup {
+        terminal_colors = true, -- add neovim terminal colors
+        undercurl = true,
+        underline = true,
+        bold = true,
+        italic = {
+          strings = true,
+          emphasis = true,
+          comments = true,
+          operators = false,
+          folds = true,
+        },
+        strikethrough = true,
+        invert_selection = false,
+        invert_signs = false,
+        invert_tabline = false,
+        invert_intend_guides = false,
+        inverse = true, -- invert background for search, diffs, statuslines and errors
+        contrast = '', -- can be "hard", "soft" or empty string
+        palette_overrides = {},
+        overrides = {},
+        dim_inactive = false,
+        transparent_mode = false,
+      }
+      vim.o.background = 'dark' -- or "light" for light mode
+      vim.cmd 'colorscheme gruvbox'
+    end,
+    opts = ...,
   },
 
   {
@@ -826,11 +857,19 @@ vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Go to the bottom window', norem
 vim.keymap.set('n', 'J', '<C-d>zz', { desc = 'Go half screen down and center the cursor', noremap = true })
 vim.keymap.set('n', 'K', '<C-u>zz', { desc = 'Go half screen up and center the cursor', noremap = true })
 
+-- Tab navigation
+vim.keymap.set('n', 'gq', '<CMD>tabclose<CR>', { desc = 'Close current tab' }) -- use this always if fugitive opens something except files
+
 -- Fugitive
-vim.keymap.set('n', '<leader>gs', '<CMD>Gedit :<CR>', { desc = '[G]it [S]ummary', noremap = true })
-vim.keymap.set('n', '<leader>gP', '<CMD>Git push<CR>', { desc = '[G]it [P]ush', noremap = true })
-vim.keymap.set('n', '<leader>gp', '<CMD>Git pull<CR>', { desc = '[G]it [P]ull', noremap = true })
-vim.keymap.set('n', '<leader>ga', '<CMD>Git add %<CR>', { desc = '[G]it [A]dd: Stage the current file', noremap = true })
+vim.keymap.set('n', '<leader>gs', '<CMD>tab G<CR>', { desc = 'Git [S]ummary', noremap = true })
+vim.keymap.set('n', '<leader>gP', '<CMD>Git push<CR>', { desc = 'Git [P]ush', noremap = true })
+vim.keymap.set('n', '<leader>gp', '<CMD>Git pull<CR>', { desc = 'Git [P]ull', noremap = true })
+vim.keymap.set('n', '<leader>ga', '<CMD>Git add %<CR>', { desc = 'Git [A]dd: Stage the current file', noremap = true })
+vim.keymap.set('n', '<leader>gc', ':Git commit -m ', { desc = 'Git [C]ommit', noremap = true })
+vim.keymap.set('n', '<leader>gC', ':Git checkout ', { desc = 'Git [C]heckout', noremap = true })
+vim.keymap.set('n', '<leader>gb', '<CMD>tab Git branch<CR>', { desc = 'Git [B]ranch', noremap = true })
+vim.keymap.set('n', '<leader>gB', ':Git branch ', { desc = 'Git New [B]ranch', noremap = true })
+vim.keymap.set('n', '<leader>gm', ':Git merge ', { desc = 'Git [M]erge', noremap = true })
 
 -- Move highlighted code/s
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv") -- Shift visual selected line down
