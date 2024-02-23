@@ -73,7 +73,22 @@ require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
 
   -- Git related plugins
-  'tpope/vim-fugitive',
+  {
+    'tpope/vim-fugitive',
+    config = function()
+      vim.keymap.set('n', '<leader>gs', '<CMD>tab G<CR>', { desc = 'Git [S]ummary', noremap = true })
+      vim.keymap.set('n', '<leader>gp', '<CMD>Git push<CR>', { desc = 'Git [P]ush', noremap = true })
+      vim.keymap.set('n', '<leader>gP', '<CMD>Git pull<CR>', { desc = 'Git [P]ull', noremap = true })
+      vim.keymap.set('n', '<leader>ga', '<CMD>Git add %<CR>', { desc = 'Git [A]dd: Stage the current file', noremap = true })
+      vim.keymap.set('n', '<leader>gc', ':Git checkout ', { desc = 'Git [C]heckout', noremap = true })
+      vim.keymap.set('n', '<leader>gC', ':Git commit -m ', { desc = 'Git [C]ommit', noremap = true })
+      vim.keymap.set('n', '<leader>gb', '<CMD>tab Git branch<CR>', { desc = 'Git [B]ranch', noremap = true })
+      vim.keymap.set('n', '<leader>gB', ':Git branch ', { desc = 'Git New [B]ranch', noremap = true })
+      vim.keymap.set('n', '<leader>gM', ':Git merge ', { desc = 'Git [M]erge', noremap = true })
+      vim.keymap.set('n', '<leader>gF', ':Git fetch ', { desc = 'Git [F]etch', noremap = true })
+    end,
+  },
+
   'tpope/vim-rhubarb',
 
   -- Detect tabstop and shiftwidth automatically
@@ -364,8 +379,9 @@ require('lazy').setup({
     end,
     opts = {
       -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-      animation = true,
-      -- insert_at_start = true,
+      animation = false,
+      focus_on_close = 'right',
+      insert_at_start = true,
       -- …etc.
     },
 
@@ -849,18 +865,6 @@ vim.keymap.set('n', 'K', '<C-u>zz', { desc = 'Go half screen up and center the c
 
 -- Tab navigation
 vim.keymap.set('n', 'gq', '<CMD>tabclose<CR>', { desc = 'Close current tab' }) -- use this always if fugitive opens something except files
-
--- Fugitive
-vim.keymap.set('n', '<leader>gs', '<CMD>tab G<CR>', { desc = 'Git [S]ummary', noremap = true })
-vim.keymap.set('n', '<leader>gp', '<CMD>Git push<CR>', { desc = 'Git [P]ush', noremap = true })
-vim.keymap.set('n', '<leader>gP', '<CMD>Git pull<CR>', { desc = 'Git [P]ull', noremap = true })
-vim.keymap.set('n', '<leader>ga', '<CMD>Git add %<CR>', { desc = 'Git [A]dd: Stage the current file', noremap = true })
-vim.keymap.set('n', '<leader>gc', ':Git checkout ', { desc = 'Git [C]heckout', noremap = true })
-vim.keymap.set('n', '<leader>gC', ':Git commit -m ', { desc = 'Git [C]ommit', noremap = true })
-vim.keymap.set('n', '<leader>gb', '<CMD>tab Git branch<CR>', { desc = 'Git [B]ranch', noremap = true })
-vim.keymap.set('n', '<leader>gB', ':Git branch ', { desc = 'Git New [B]ranch', noremap = true })
-vim.keymap.set('n', '<leader>gM', ':Git merge ', { desc = 'Git [M]erge', noremap = true })
-vim.keymap.set('n', '<leader>gF', ':Git fetch ', { desc = 'Git [F]etch', noremap = true })
 
 -- Move highlighted code/s
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv") -- Shift visual selected line down
