@@ -238,7 +238,7 @@ require('lazy').setup({
     -- See `:help lualine.txt`
     opts = {
       options = {
-        icons_enabled = false,
+        icons_enabled = true,
         theme = 'auto',
         component_separators = '|',
         section_separators = '',
@@ -323,7 +323,7 @@ require('lazy').setup({
     end,
   },
 
-  {
+  --[[ {
     'ellisonleao/gruvbox.nvim',
     priority = 1000,
     config = function()
@@ -355,6 +355,40 @@ require('lazy').setup({
       vim.cmd 'colorscheme gruvbox'
     end,
     opts = ...,
+  }, ]]
+
+  {
+    'rebelot/kanagawa.nvim',
+    config = function()
+      -- Default options:
+      require('kanagawa').setup {
+        compile = false, -- enable compiling the colorscheme
+        undercurl = true, -- enable undercurls
+        commentStyle = { italic = true },
+        functionStyle = {},
+        keywordStyle = { italic = true },
+        statementStyle = { bold = true },
+        typeStyle = {},
+        transparent = true,
+        dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+        terminalColors = true, -- define vim.g.terminal_color_{0,17}
+        colors = { -- add/modify theme and palette colors
+          palette = {},
+          theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+        },
+        overrides = function(colors) -- add/modify highlights
+          return {}
+        end,
+        theme = 'wave', -- Load "wave" theme when 'background' option is not set
+        background = { -- map the value of 'background' option to a theme
+          dark = 'wave', -- try "dragon" !
+          light = 'lotus',
+        },
+      }
+
+      -- setup must be called before loading
+      vim.cmd 'colorscheme kanagawa'
+    end,
   },
 
   {
@@ -362,8 +396,29 @@ require('lazy').setup({
     'goolord/alpha-nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      require('alpha').setup(require('alpha.themes.startify').config)
+      local alpha = require 'alpha'
+      local startify = require 'alpha.themes.startify'
 
+      startify.opts.layout[1].val = 2
+      startify.opts.opts.margin = 8
+
+      startify.section.header.val = {
+        [[]],
+        [[]],
+        [[░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░]],
+        [[░░░      ░░░       ░░░░      ░░░  ░░░░  ░░        ░░        ░░        ░░       ░░░        ░░       ░░░       ░░░  ░░░░  ░░]],
+        [[▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒   ▒▒   ▒▒▒▒▒▒▒  ▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒▒▒  ▒▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒▒▒▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒▒  ▒▒  ▒▒▒]],
+        [[▓▓  ▓▓▓▓▓▓▓▓       ▓▓▓  ▓▓▓▓  ▓▓        ▓▓▓▓▓  ▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓  ▓▓▓▓▓       ▓▓▓      ▓▓▓▓       ▓▓▓       ▓▓▓▓▓    ▓▓▓▓]],
+        [[██  ████  ██  ███  ███        ██  █  █  ███  ████████  ████████  ███████  ████  ██  ████████  ███  ███  ███  ██████  █████]],
+        [[███      ███  ████  ██  ████  ██  ████  ██        ██        ██        ██       ███        ██  ████  ██  ████  █████  █████]],
+        [[██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████]],
+        [[]],
+        [[]],
+      }
+
+      alpha.setup(startify.config)
+
+      -- Keymaps
       vim.keymap.set('n', '<C-a>', '<CMD>Alpha<CR>', { noremap = true })
     end,
   },
@@ -381,7 +436,6 @@ require('lazy').setup({
       -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
       animation = false,
       focus_on_close = 'right',
-      insert_at_start = true,
       -- …etc.
     },
 
@@ -404,7 +458,7 @@ require('lazy').setup({
         },
         format_on_save = {
           -- I recommend these options. See :help conform.format for details.
-          lsp_fallback = false,
+          lsp_fallback = true,
           timeout_ms = 500,
           async = false,
         },
@@ -862,9 +916,6 @@ vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Go to the bottom window', norem
 -- Vertical Navigations
 vim.keymap.set('n', 'J', '<C-d>zz', { desc = 'Go half screen down and center the cursor', noremap = true })
 vim.keymap.set('n', 'K', '<C-u>zz', { desc = 'Go half screen up and center the cursor', noremap = true })
-
--- Tab navigation
-vim.keymap.set('n', 'gq', '<CMD>tabclose<CR>', { desc = 'Close current tab' }) -- use this always if fugitive opens something except files
 
 -- Move highlighted code/s
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv") -- Shift visual selected line down
