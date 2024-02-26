@@ -1,2 +1,2 @@
 # My Neovim Config
-Just 
+Just clone this repo in your nvim folder
