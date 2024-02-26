@@ -369,7 +369,7 @@ require('lazy').setup({
         keywordStyle = { italic = true },
         statementStyle = { bold = true },
         typeStyle = {},
-        transparent = true,
+        transparent = false,
         dimInactive = false, -- dim inactive window `:h hl-NormalNC`
         terminalColors = true, -- define vim.g.terminal_color_{0,17}
         colors = { -- add/modify theme and palette colors
@@ -451,16 +451,17 @@ require('lazy').setup({
       require('conform').setup {
         formatters_by_ft = {
           lua = { 'stylua' },
+          jsx = { 'prettier' },
           vue = { 'prettier' },
           javascript = { 'prettier' },
           typescript = { 'prettier' },
+          json = { 'prettier' },
           html = { 'prettier' },
+          css = { 'prettier' },
         },
-        format_on_save = {
+        format_after_save = {
           -- I recommend these options. See :help conform.format for details.
           lsp_fallback = true,
-          timeout_ms = 500,
-          async = false,
         },
       }
     end,
@@ -920,10 +921,6 @@ vim.keymap.set('n', 'K', '<C-u>zz', { desc = 'Go half screen up and center the c
 -- Move highlighted code/s
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv") -- Shift visual selected line down
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv") -- Shift visual selected line up
-
--- Remapping start and end of line motions
-vim.keymap.set({ 'n', 'v' }, '$', '0') -- Shift visual selected line down
-vim.keymap.set({ 'n', 'v' }, '0', '$') -- Shift visual selected line down
 
 -- My Custom Autocommands
 
