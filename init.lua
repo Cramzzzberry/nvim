@@ -76,23 +76,6 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
 
-  -- Git related plugins
-  {
-    'tpope/vim-fugitive',
-    config = function()
-      vim.keymap.set('n', '<leader>gs', '<CMD>tab G<CR>', { desc = 'Git [S]ummary', noremap = true })
-      vim.keymap.set('n', '<leader>gp', '<CMD>Git push<CR>', { desc = 'Git [P]ush', noremap = true })
-      vim.keymap.set('n', '<leader>gP', '<CMD>Git pull<CR>', { desc = 'Git [P]ull', noremap = true })
-      vim.keymap.set('n', '<leader>ga', '<CMD>Git add %<CR>', { desc = 'Git [A]dd: Stage the current file', noremap = true })
-      vim.keymap.set('n', '<leader>gc', ':Git checkout ', { desc = 'Git [C]heckout', noremap = true })
-      vim.keymap.set('n', '<leader>gC', ':Git commit -m ', { desc = 'Git [C]ommit', noremap = true })
-      vim.keymap.set('n', '<leader>gb', '<CMD>tab Git branch<CR>', { desc = 'Git [B]ranch', noremap = true })
-      vim.keymap.set('n', '<leader>gB', ':Git branch ', { desc = 'Git New [B]ranch', noremap = true })
-      vim.keymap.set('n', '<leader>gM', ':Git merge ', { desc = 'Git [M]erge', noremap = true })
-      vim.keymap.set('n', '<leader>gF', ':Git fetch ', { desc = 'Git [F]etch', noremap = true })
-    end,
-  },
-
   'tpope/vim-rhubarb',
 
   -- Detect tabstop and shiftwidth automatically
