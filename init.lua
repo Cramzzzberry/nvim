@@ -420,15 +420,15 @@ require('lazy').setup({
       end)
 
       -- Keymaps
-      vim.api.nvim_set_keymap('n', '<leader>ta', ':$tabnew<CR>', { desc = 'Open a new tab', noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>tc', ':tabclose<CR>', { desc = 'Close current tab', noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>to', ':tabonly<CR>', { desc = 'Close all tabs except current', noremap = true })
-      vim.api.nvim_set_keymap('n', '<tab>', ':tabn<CR>', { desc = 'Go to next tab', noremap = true })
-      vim.api.nvim_set_keymap('n', '<S-tab>', ':tabp<CR>', { desc = 'Go to previous tab', noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>ta', ':$tabnew<CR>', { desc = 'Open a new tab', noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>tc', ':tabclose<CR>', { desc = 'Close current tab', noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>to', ':tabonly<CR>', { desc = 'Close all tabs except current', noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<tab>', ':tabn<CR>', { desc = 'Go to next tab', noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<S-tab>', ':tabp<CR>', { desc = 'Go to previous tab', noremap = true, silent = true })
       -- move current tab to previous position
-      vim.api.nvim_set_keymap('n', '<leader>tmp', ':-tabmove<CR>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>tmp', ':-tabmove<CR>', { noremap = true, silent = true })
       -- move current tab to next position
-      vim.api.nvim_set_keymap('n', '<leader>tmn', ':+tabmove<CR>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>tmn', ':+tabmove<CR>', { noremap = true, silent = true })
     end,
   },
 
