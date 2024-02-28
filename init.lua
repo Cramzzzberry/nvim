@@ -304,7 +304,7 @@ require('lazy').setup({
       }
 
       -- Open Oil nvim
-      vim.keymap.set('n', '<C-e>', '<CMD>Oil --float<CR>', { desc = 'Toggles Oil nvim' })
+      vim.keymap.set('n', '<leader>f', '<CMD>Oil --float<CR>', { desc = 'Open Oil' })
     end,
   },
 
@@ -320,41 +320,6 @@ require('lazy').setup({
       -- Toggle terminal
       vim.keymap.set('n', '<A-t>', '<CMD>ToggleTerm dir=%:p:h direction=float<CR>', { desc = 'Toggle the toggle terminal' })
       vim.keymap.set('t', '<esc>', '<CMD>ToggleTerm<CR>', { desc = 'Toggle the toggle terminal' })
-    end,
-  },
-
-  {
-    -- Colorschene
-    'rebelot/kanagawa.nvim',
-    config = function()
-      -- Default options:
-      require('kanagawa').setup {
-        compile = false, -- enable compiling the colorscheme
-        undercurl = true, -- enable undercurls
-        commentStyle = { italic = true },
-        functionStyle = {},
-        keywordStyle = { italic = true },
-        statementStyle = { bold = true },
-        typeStyle = {},
-        transparent = false,
-        dimInactive = false, -- dim inactive window `:h hl-NormalNC`
-        terminalColors = true, -- define vim.g.terminal_color_{0,17}
-        colors = { -- add/modify theme and palette colors
-          palette = {},
-          theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
-        },
-        overrides = function(colors) -- add/modify highlights
-          return {}
-        end,
-        theme = 'wave', -- Load "wave" theme when 'background' option is not set
-        background = { -- map the value of 'background' option to a theme
-          dark = 'wave', -- try "dragon" !
-          light = 'lotus',
-        },
-      }
-
-      -- setup must be called before loading
-      vim.cmd 'colorscheme kanagawa'
     end,
   },
 
@@ -386,11 +351,11 @@ require('lazy').setup({
       alpha.setup(startify.config)
 
       -- Keymaps
-      vim.keymap.set('n', '<C-a>', '<CMD>Alpha<CR>', { noremap = true })
+      vim.keymap.set('n', '<leader>a', '<CMD>Alpha<CR>', { desc = 'Open Alpha', noremap = true })
     end,
   },
 
-  {
+  --[[ {
     'romgrk/barbar.nvim',
     dependencies = {
       'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
@@ -407,6 +372,96 @@ require('lazy').setup({
     },
 
     version = '^1.0.0', -- optional: only update when a new 1.x version is released
+  }, ]]
+
+  {
+    'nanozuki/tabby.nvim',
+    event = 'VimEnter',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      -- configs...
+      local theme = {
+        fill = 'TabLineFill',
+        -- Also you can do this: fill = { fg='#f2e9de', bg='#907aa9', style='italic' }
+        head = 'TabLine',
+        current_tab = 'TabLineSel',
+        tab = 'TabLine',
+        win = 'TabLine',
+        tail = 'TabLine',
+      }
+
+      -- Setup
+      require('tabby.tabline').set(function(line)
+        return {
+          {
+            { '  ', hl = theme.head },
+            line.sep('', theme.head, theme.fill),
+          },
+          line.tabs().foreach(function(tab)
+            local hl = tab.is_current() and theme.current_tab or theme.tab
+            return {
+              line.sep('', hl, theme.fill),
+              tab.is_current() and '' or '󰆣',
+              tab.number(),
+              tab.name(),
+              tab.close_btn '',
+              line.sep('', hl, theme.fill),
+              hl = hl,
+              margin = ' ',
+            }
+          end),
+          line.spacer(),
+          line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
+            return {
+              line.sep('', theme.win, theme.fill),
+              win.is_current() and '' or '',
+              win.buf_name(),
+              line.sep('', theme.win, theme.fill),
+              hl = theme.win,
+              margin = ' ',
+            }
+          end),
+          {
+            line.sep('', theme.tail, theme.fill),
+            { '  ', hl = theme.tail },
+          },
+          hl = theme.fill,
+        }
+      end)
+
+      -- Preset
+      require('tabby.tabline').use_preset('active_wins_at_tail', {
+        theme = {
+          fill = 'TabLineFill', -- tabline background
+          head = 'TabLine', -- head element highlight
+          current_tab = 'TabLineSel', -- current tab label highlight
+          tab = 'TabLine', -- other tab label highlight
+          win = 'TabLine', -- window highlight
+          tail = 'TabLine', -- tail element highlight
+        },
+        nerdfont = true, -- whether use nerdfont
+        lualine_theme = nil, -- lualine theme name
+        tab_name = {
+          name_fallback = function(tabid)
+            return ''
+          end,
+        },
+        buf_name = {
+          mode = 'tail',
+        },
+      })
+
+      -- Keymaps
+      vim.api.nvim_set_keymap('n', '<leader>ta', ':$tabnew<CR>', { desc = 'Open a new tab', noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>tc', ':tabclose<CR>', { desc = 'Close current tab', noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>to', ':tabonly<CR>', { desc = 'Close all tabs except current', noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>tn', ':tabn<CR>', { desc = 'Go to next tab', noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>tp', ':tabp<CR>', { desc = 'Go to previous tab', noremap = true })
+      -- move current tab to previous position
+      vim.api.nvim_set_keymap('n', '<leader>tmp', ':-tabmove<CR>', { noremap = true })
+      -- move current tab to next position
+      vim.api.nvim_set_keymap('n', '<leader>tmn', ':+tabmove<CR>', { noremap = true })
+    end,
   },
 
   -- Formatter
@@ -440,6 +495,42 @@ require('lazy').setup({
     event = 'InsertEnter',
     opts = {}, -- this is equalent to setup({}) function
   },
+
+  --Colorschemes
+  {
+    -- kanagawa
+    'rebelot/kanagawa.nvim',
+    config = function()
+      -- Default options:
+      require('kanagawa').setup {
+        compile = false, -- enable compiling the colorscheme
+        undercurl = true, -- enable undercurls
+        commentStyle = { italic = true },
+        functionStyle = {},
+        keywordStyle = { italic = true },
+        statementStyle = { bold = true },
+        typeStyle = {},
+        transparent = false,
+        dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+        terminalColors = true, -- define vim.g.terminal_color_{0,17}
+        colors = { -- add/modify theme and palette colors
+          palette = {},
+          theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+        },
+        overrides = function() -- add/modify highlights
+          return {}
+        end,
+        theme = 'wave', -- Load "wave" theme when 'background' option is not set
+        background = { -- map the value of 'background' option to a theme
+          dark = 'wave', -- try "dragon" !
+          light = 'lotus',
+        },
+      }
+
+      vim.cmd 'colorscheme kanagawa-wave'
+    end,
+  },
+
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -531,10 +622,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('telescope').setup {
   defaults = {
     mappings = {
+      n = {
+        ['<c-d>'] = require('telescope.actions').delete_buffer,
+      }, -- n
       i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
-      },
+        ['<C-h>'] = 'which_key',
+        ['<c-d>'] = require('telescope.actions').delete_buffer,
+      }, -- i
     },
   },
 }
@@ -670,7 +764,7 @@ vim.defer_fn(function()
           ['[]'] = '@class.outer',
         },
       },
-      swap = {
+      --[[ swap = {
         enable = true,
         swap_next = {
           ['<leader>a'] = '@parameter.inner',
@@ -678,7 +772,7 @@ vim.defer_fn(function()
         swap_previous = {
           ['<leader>A'] = '@parameter.inner',
         },
-      },
+      }, ]]
     },
   }
 end, 0)
@@ -857,23 +951,6 @@ cmp.setup {
 }
 
 -- My Custom Basic Keymaps
-
--- Buffer keymaps
-vim.keymap.set('n', '<S-tab>', '<CMD>BufferPrevious<CR>')
-vim.keymap.set('n', '<tab>', '<CMD>BufferNext<CR>')
-vim.keymap.set('n', '<A-c>', '<CMD>BufferClose<CR>')
-vim.keymap.set('n', '<A-1>', '<CMD>BufferGoto 1<CR>')
-vim.keymap.set('n', '<A-2>', '<CMD>BufferGoto 2<CR>')
-vim.keymap.set('n', '<A-3>', '<CMD>BufferGoto 3<CR>')
-vim.keymap.set('n', '<A-4>', '<CMD>BufferGoto 4<CR>')
-vim.keymap.set('n', '<A-5>', '<CMD>BufferGoto 5<CR>')
-vim.keymap.set('n', '<A-6>', '<CMD>BufferGoto 6<CR>')
-vim.keymap.set('n', '<A-7>', '<CMD>BufferGoto 7<CR>')
-vim.keymap.set('n', '<A-8>', '<CMD>BufferGoto 8<CR>')
-vim.keymap.set('n', '<A-9>', '<CMD>BufferGoto 9<CR>')
-vim.keymap.set('n', '<A-0>', '<CMD>BufferLast<CR>')
-vim.keymap.set('n', '<A-<>', '<CMD>BufferMovePrevious<CR>')
-vim.keymap.set('n', '<A->>', '<CMD>BufferMoveNext<CR>')
 
 --Window navigation
 vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Go to the left window', noremap = true })
