@@ -308,6 +308,7 @@ require('lazy').setup({
         keymaps = {
           ['<esc>'] = 'actions.close',
           ['<bs>'] = 'actions.parent',
+          ['\\'] = 'actions.select_tab',
         },
       }
 
@@ -362,25 +363,6 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>a', '<CMD>Alpha<CR>', { desc = 'Open Alpha', noremap = true })
     end,
   },
-
-  --[[ {
-    'romgrk/barbar.nvim',
-    dependencies = {
-      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-    },
-    init = function()
-      vim.g.barbar_auto_setup = false
-    end,
-    opts = {
-      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-      animation = false,
-      focus_on_close = 'right',
-      -- …etc.
-    },
-
-    version = '^1.0.0', -- optional: only update when a new 1.x version is released
-  }, ]]
 
   {
     'nanozuki/tabby.nvim',
@@ -437,34 +419,12 @@ require('lazy').setup({
         }
       end)
 
-      -- Preset
-      require('tabby.tabline').use_preset('active_wins_at_tail', {
-        theme = {
-          fill = 'TabLineFill', -- tabline background
-          head = 'TabLine', -- head element highlight
-          current_tab = 'TabLineSel', -- current tab label highlight
-          tab = 'TabLine', -- other tab label highlight
-          win = 'TabLine', -- window highlight
-          tail = 'TabLine', -- tail element highlight
-        },
-        nerdfont = true, -- whether use nerdfont
-        lualine_theme = nil, -- lualine theme name
-        tab_name = {
-          name_fallback = function(tabid)
-            return ''
-          end,
-        },
-        buf_name = {
-          mode = 'tail',
-        },
-      })
-
       -- Keymaps
       vim.api.nvim_set_keymap('n', '<leader>ta', ':$tabnew<CR>', { desc = 'Open a new tab', noremap = true })
       vim.api.nvim_set_keymap('n', '<leader>tc', ':tabclose<CR>', { desc = 'Close current tab', noremap = true })
       vim.api.nvim_set_keymap('n', '<leader>to', ':tabonly<CR>', { desc = 'Close all tabs except current', noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>tn', ':tabn<CR>', { desc = 'Go to next tab', noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>tp', ':tabp<CR>', { desc = 'Go to previous tab', noremap = true })
+      vim.api.nvim_set_keymap('n', '<tab>', ':tabn<CR>', { desc = 'Go to next tab', noremap = true })
+      vim.api.nvim_set_keymap('n', '<S-tab>', ':tabp<CR>', { desc = 'Go to previous tab', noremap = true })
       -- move current tab to previous position
       vim.api.nvim_set_keymap('n', '<leader>tmp', ':-tabmove<CR>', { noremap = true })
       -- move current tab to next position
@@ -475,26 +435,23 @@ require('lazy').setup({
   -- Formatter
   {
     'stevearc/conform.nvim',
-    opts = {},
+    opts = {
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        jsx = { 'prettier' },
+        vue = { 'prettier' },
+        javascript = { 'prettier' },
+        typescript = { 'prettier' },
+        json = { 'prettier' },
+        html = { 'prettier' },
+        css = { 'prettier' },
+      },
+      format_after_save = {
+        -- I recommend these options. See :help conform.format for details.
+        lsp_fallback = true,
+      },
+    },
     event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      require('conform').setup {
-        formatters_by_ft = {
-          lua = { 'stylua' },
-          jsx = { 'prettier' },
-          vue = { 'prettier' },
-          javascript = { 'prettier' },
-          typescript = { 'prettier' },
-          json = { 'prettier' },
-          html = { 'prettier' },
-          css = { 'prettier' },
-        },
-        format_after_save = {
-          -- I recommend these options. See :help conform.format for details.
-          lsp_fallback = true,
-        },
-      }
-    end,
   },
 
   -- Auto pair
@@ -631,12 +588,17 @@ require('telescope').setup {
   defaults = {
     mappings = {
       n = {
-        ['<c-d>'] = require('telescope.actions').delete_buffer,
+        ['d'] = require('telescope.actions').delete_buffer,
       }, -- n
       i = {
         ['<C-h>'] = 'which_key',
         ['<c-d>'] = require('telescope.actions').delete_buffer,
       }, -- i
+    },
+  },
+  pickers = {
+    buffers = {
+      initial_mode = 'normal',
     },
   },
 }
