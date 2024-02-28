@@ -11,6 +11,7 @@ return {
       json = { 'prettier' },
       html = { 'prettier' },
       css = { 'prettier' },
+      python = { 'black' },
     },
     format_after_save = {
       -- I recommend these options. See :help conform.format for details.
