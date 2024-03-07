@@ -364,16 +364,13 @@ require('telescope').setup {
     mappings = {
       n = {
         ['d'] = require('telescope.actions').delete_buffer,
+        ['\\'] = require('telescope.actions').select_tab,
       }, -- n
       i = {
-        ['<C-h>'] = 'which_key',
+        ['<c-h>'] = 'which_key',
         ['<c-d>'] = require('telescope.actions').delete_buffer,
+        ['<c-\\>'] = require('telescope.actions').select_tab,
       }, -- i
-    },
-  },
-  pickers = {
-    buffers = {
-      initial_mode = 'normal',
     },
   },
 }
@@ -418,8 +415,18 @@ end
 vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
 
 -- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader>?', function()
+  require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown {
+    winblend = 10,
+  })
+end, { desc = '[?] Find recently opened files' })
+
+vim.keymap.set('n', '<leader><space>', function()
+  require('telescope.builtin').buffers(require('telescope.themes').get_dropdown {
+    winblend = 10,
+  })
+end, { desc = '[ ] Find existing buffers' })
+
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {

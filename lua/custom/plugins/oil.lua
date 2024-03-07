@@ -14,6 +14,6 @@ return {
     }
 
     -- Open Oil nvim
-    vim.keymap.set('n', '<leader>e', '<CMD>Oil --float<CR>', { desc = 'Open Oil' })
+    vim.keymap.set('n', '<leader>e', '<CMD>Oil --float<CR>', { desc = 'Open Explorer' })
   end,
 }
