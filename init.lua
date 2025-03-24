@@ -47,5 +47,8 @@ vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+-- Always show sign column
+vim.o.signcolumn = "yes:1"
+
 -- call Lazy nvim
 require("config.lazy")
