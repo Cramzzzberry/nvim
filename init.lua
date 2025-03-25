@@ -23,12 +23,12 @@ vim.keymap.set("n", "<a-j>", "<c-w>j")
 vim.keymap.set("n", "<a-k>", "<c-w>k")
 vim.keymap.set("n", "<a-l>", "<c-w>l")
 
--- save and quit mappings
+-- Save and quit mappings
 vim.keymap.set("n", "<leader>w", ":w<cr>")
 vim.keymap.set("n", "<leader>q", ":q<cr>")
 vim.keymap.set("n", "<leader>Q", ":q!<cr>")
 
--- clear search highlightings
+-- Clear search highlightings
 vim.keymap.set("n", "<esc>", ":nohlsearch<cr>")
 
 -- Dont show the mode in the command line
@@ -43,12 +43,15 @@ vim.opt.scrolloff = 5
 -- Exit terminal mode
 vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
 
--- configure how splits will open
+-- Configure how splits will open
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 -- Always show sign column
 vim.o.signcolumn = "yes:1"
 
--- call Lazy nvim
+-- Make cursor into block on the following modes
+vim.opt.guicursor = "n-v-i-c:block"
+
+-- Call Lazy nvim
 require("config.lazy")
