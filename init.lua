@@ -24,12 +24,12 @@ vim.keymap.set("n", "<a-k>", "<c-w>k")
 vim.keymap.set("n", "<a-l>", "<c-w>l")
 
 -- Save and quit mappings
-vim.keymap.set("n", "<leader>w", ":w<cr>")
-vim.keymap.set("n", "<leader>q", ":q<cr>")
+vim.keymap.set("n", "<leader>w", ":w<cr>", { silent = true })
+vim.keymap.set("n", "<leader>q", ":q<cr>", { silent = true })
 vim.keymap.set("n", "<leader>Q", ":q!<cr>")
 
 -- Clear search highlightings
-vim.keymap.set("n", "<esc>", ":nohlsearch<cr>")
+vim.keymap.set("n", "<esc>", ":nohlsearch<cr>", { silent = true })
 
 -- Dont show the mode in the command line
 vim.opt.showmode = false
