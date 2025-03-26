@@ -51,7 +51,7 @@ vim.opt.splitbelow = true
 vim.o.signcolumn = "yes:1"
 
 -- Make cursor into block on the following modes
-vim.opt.guicursor = "n-v-i-c:block"
+-- vim.opt.guicursor = "n-v-i-c:block"
 
 -- Call Lazy nvim
 require("config.lazy")
