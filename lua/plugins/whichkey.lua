@@ -7,7 +7,8 @@ return {
     -- refer to the configuration section below
     preset = "helix",
     spec = {
-      { "<leader>g", group = "[G]it" }
+      { "<leader>g", group = "[G]it" },
+      { "<leader>gb", group = "Git [B]..." }
     }
   },
   keys = {

@@ -8,10 +8,10 @@ return {
     vim.keymap.set("n", "<leader>gl", ":topleft vertical Git log<cr>", { desc = "Git [L]og", silent = true })
 
     -- Open Git blame
-    vim.keymap.set("n", "<leader>gbl", ":Git blame<cr>", { desc = "Git Blame", silent = true })
+    vim.keymap.set("n", "<leader>gbl", ":Git blame<cr>", { desc = "Git B[l]ame", silent = true })
 
     -- List branches
-    vim.keymap.set("n", "<leader>gbr", ":Git branch", { desc = "Git Branch..." })
+    vim.keymap.set("n", "<leader>gbr", ":Git branch", { desc = "Git B[r]anch..." })
 
     -- Open diff in 3 vertical splits
     vim.keymap.set("n", "<leader>gvds", ":Gvdiffsplit!<cr>", { silent = true })

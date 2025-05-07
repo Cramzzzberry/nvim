@@ -4,6 +4,13 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Clipboard setup
+vim.schedule(
+  function()
+    vim.opt.clipboard = "unnamedplus"
+  end
+)
+
 -- Show numbers on the side
 vim.opt.number = true
 vim.opt.relativenumber = true
