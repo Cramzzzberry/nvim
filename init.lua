@@ -24,9 +24,9 @@ vim.keymap.set("n", "<a-k>", "<c-w>k")
 vim.keymap.set("n", "<a-l>", "<c-w>l")
 
 -- Save and quit mappings
-vim.keymap.set("n", "<leader>w", ":w<cr>", { silent = true })
-vim.keymap.set("n", "<leader>q", ":q<cr>", { silent = true })
-vim.keymap.set("n", "<leader>Q", ":q!<cr>")
+vim.keymap.set("n", "<leader>w", ":w<cr>", { desc = "[W]rite", silent = true })
+vim.keymap.set("n", "<leader>q", ":q<cr>", { desc = "[Q]uit", silent = true })
+vim.keymap.set("n", "<leader>Q", ":q!<cr>", { desc = "Force [Q]uit", silent = true })
 
 -- Clear search highlightings
 vim.keymap.set("n", "<esc>", ":nohlsearch<cr>", { silent = true })

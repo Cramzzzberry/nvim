@@ -2,16 +2,16 @@ return {
   'tpope/vim-fugitive',
   config = function()
     -- Open Fugitive Status
-    vim.keymap.set("n", "<leader>gs", ":topleft vertical G<cr>", { silent = true })
+    vim.keymap.set("n", "<leader>gs", ":topleft vertical G<cr>", { desc = "Git [S]tatus", silent = true })
 
     -- Open Git Log in split view
-    vim.keymap.set("n", "<leader>gl", ":topleft vertical Git log<cr>", { silent = true })
+    vim.keymap.set("n", "<leader>gl", ":topleft vertical Git log<cr>", { desc = "Git [L]og", silent = true })
 
     -- Open Git blame
-    vim.keymap.set("n", "<leader>gbl", ":Git blame<cr>", { silent = true })
+    vim.keymap.set("n", "<leader>gbl", ":Git blame<cr>", { desc = "Git Blame", silent = true })
 
     -- List branches
-    vim.keymap.set("n", "<leader>gbr", ":Git branch")
+    vim.keymap.set("n", "<leader>gbr", ":Git branch", { desc = "Git Branch..." })
 
     -- Open diff in 3 vertical splits
     vim.keymap.set("n", "<leader>gvds", ":Gvdiffsplit!<cr>", { silent = true })
