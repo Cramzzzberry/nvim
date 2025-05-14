@@ -5,7 +5,7 @@ return {
     vim.keymap.set("n", "<leader>gs", ":topleft vertical G<cr>", { desc = "Git [S]tatus", silent = true })
 
     -- Open Git Log in split view
-    vim.keymap.set("n", "<leader>gl", ":topleft vertical Git log<cr>", { desc = "Git [L]og", silent = true })
+    vim.keymap.set("n", "<leader>gl", ":topleft vertical Git log --oneline --graph<cr>", { desc = "Git [L]og", silent = true })
 
     -- Open Git blame
     vim.keymap.set("n", "<leader>gbl", ":Git blame<cr>", { desc = "Git B[l]ame", silent = true })
