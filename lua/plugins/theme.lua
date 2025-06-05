@@ -14,7 +14,7 @@
 return {
   "Yazeed1s/minimal.nvim",
   config = function()
-    vim.g.transparent_background = true
+    vim.g.minimal_italic_comments = false
     vim.cmd.colorscheme("minimal")
   end
 }
