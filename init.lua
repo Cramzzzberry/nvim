@@ -1,6 +1,7 @@
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -23,6 +24,8 @@ vim.opt.expandtab = true
 -- Vertical navigation
 vim.keymap.set("n", "J", "<c-d>zz")
 vim.keymap.set("n", "K", "<c-u>zz")
+vim.keymap.set("v", "J", "5j")
+vim.keymap.set("v", "K", "5k")
 
 -- Window pane navigation
 vim.keymap.set("n", "<a-h>", "<c-w>h")
@@ -34,6 +37,10 @@ vim.keymap.set("n", "<a-l>", "<c-w>l")
 vim.keymap.set("n", "<leader>w", ":w<cr>", { desc = "[W]rite", silent = true })
 vim.keymap.set("n", "<leader>q", ":q<cr>", { desc = "[Q]uit", silent = true })
 vim.keymap.set("n", "<leader>Q", ":q!<cr>", { desc = "Force [Q]uit", silent = true })
+
+-- Indentation mappings
+vim.keymap.set("v", ">", ">gv")
+vim.keymap.set("v", "<", "<gv")
 
 -- Clear search highlightings
 vim.keymap.set("n", "<esc>", ":nohlsearch<cr>", { silent = true })
