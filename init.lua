@@ -52,7 +52,7 @@ vim.opt.showmode = false
 vim.g.have_nerd_font = true
 
 -- Set the minimum lines to scroll the content
-vim.opt.scrolloff = 5
+vim.opt.scrolloff = 10
 
 -- Exit terminal mode
 vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
@@ -63,6 +63,9 @@ vim.opt.splitbelow = true
 
 -- Always show sign column
 vim.o.signcolumn = "yes:1"
+
+-- Open Lazy.nvim dashboard
+vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>", { silent = true, desc = "[L]azy" })
 
 -- Make cursor into block on the following modes
 -- vim.opt.guicursor = "n-v-i-c:block"

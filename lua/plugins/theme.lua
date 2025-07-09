@@ -1,20 +1,12 @@
--- return { 
---   "catppuccin/nvim",
---   name = "catppuccin",
---   priority = 1000,
---   config = function()
---     require("catppuccin").setup({
---       no_italic = true
---     })
---     vim.cmd.colorscheme("catppuccin-mocha")
---   end
--- }
-
-
 return {
-  "Yazeed1s/minimal.nvim",
+  'sainnhe/sonokai',
+  lazy = false,
+  priority = 1000,
   config = function()
-    vim.g.minimal_italic_comments = false
-    vim.cmd.colorscheme("minimal")
+    -- Optionally configure and load the colorscheme
+    -- directly inside the plugin declaration.
+    vim.g.everforest_enable_italic = true
+    vim.g.everforest_background = "hard"
+    vim.cmd.colorscheme('sonokai')
   end
 }

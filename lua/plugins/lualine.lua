@@ -1,9 +1,12 @@
 return {
   'nvim-lualine/lualine.nvim',
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
-  config = function()
-    require("lualine").setup({
-      options = { theme = "dracula" }
-    })
-  end
+  opts = {
+    options = {
+      component_separators = "", -- Remove default separators
+      section_separators = {
+        left = " ",              -- Your desired left arrow character
+        right = " ",             -- Your desired right arrow character
+      },
+    },
+  }
 }
