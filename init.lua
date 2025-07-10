@@ -61,6 +61,10 @@ vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+-- Case-insensitive search UNLESS \C or more capital letters in the search term
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
 -- Always show sign column
 vim.o.signcolumn = "yes:1"
 
