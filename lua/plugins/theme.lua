@@ -1,12 +1,12 @@
 return {
-  'sainnhe/sonokai',
+  "scottmckendry/cyberdream.nvim",
   lazy = false,
   priority = 1000,
   config = function()
-    -- Optionally configure and load the colorscheme
-    -- directly inside the plugin declaration.
-    vim.g.everforest_enable_italic = true
-    vim.g.everforest_background = "hard"
-    vim.cmd.colorscheme('sonokai')
+    require("cyberdream").setup({
+      transparent = true,
+      saturation = 1
+    })
+    vim.cmd("colorscheme cyberdream")
   end
 }
