@@ -71,8 +71,42 @@ vim.o.signcolumn = "yes:1"
 -- Open Lazy.nvim dashboard
 vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>", { silent = true, desc = "[L]azy" })
 
+-- Enable 24-bit color
+vim.opt.termguicolors = true
+
 -- Make cursor into block on the following modes
 -- vim.opt.guicursor = "n-v-i-c:block"
+
+-- Enable LSP configuration
+vim.lsp.enable({
+  "luals",
+  "angularls",
+  "tsls",
+  "htmlls",
+  "cssls"
+})
+
+-- Format on save
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("lsp", { clear = true }),
+  callback = function(args)
+    -- 2
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      -- 3
+      buffer = args.buf,
+      callback = function()
+        -- 4 + 5
+        vim.lsp.buf.format { async = false, id = args.data.client_id }
+      end,
+    })
+  end
+})
+
+-- LSP Diagnostics
+vim.api.nvim_set_keymap('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dn', '<cmd>lua vim.diagnostic.goto_next()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dd', '<cmd>lua vim.diagnostic.setloclist()<CR>', { noremap = true, silent = true })
 
 -- Call Lazy nvim
 require("config.lazy")
