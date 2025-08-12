@@ -8,7 +8,8 @@ return {
     preset = "modern",
     spec = {
       { "<leader>g", group = "[G]it" },
-      { "<leader>gb", group = "Git [B]..." }
+      { "<leader>gb", group = "Git [B]..." },
+      { "<leader>d", group = "[D]iagnostics" }
     }
   },
   keys = {

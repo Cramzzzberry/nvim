@@ -36,7 +36,7 @@ vim.keymap.set("n", "<a-l>", "<c-w>l")
 -- Save and quit mappings
 vim.keymap.set("n", "<leader>w", ":w<cr>", { desc = "[W]rite", silent = true })
 vim.keymap.set("n", "<leader>q", ":q<cr>", { desc = "[Q]uit", silent = true })
-vim.keymap.set("n", "<leader>Q", ":q!<cr>", { desc = "Force [Q]uit", silent = true })
+vim.keymap.set("n", "<leader>Q", ":q!<cr>", { desc = "[Q]uit (Forced)", silent = true })
 
 -- Indentation mappings
 vim.keymap.set("v", ">", ">gv")
@@ -69,7 +69,7 @@ vim.o.smartcase = true
 vim.o.signcolumn = "yes:1"
 
 -- Open Lazy.nvim dashboard
-vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>", { silent = true, desc = "[L]azy" })
+vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>", { silent = true, desc = "[L]azy Dashboard" })
 
 -- Enable 24-bit color
 vim.opt.termguicolors = true
@@ -103,10 +103,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 -- LSP Diagnostics
-vim.api.nvim_set_keymap('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>dp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>dn', '<cmd>lua vim.diagnostic.goto_next()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>dd', '<cmd>lua vim.diagnostic.setloclist()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true, desc = "[O]pen float" })
+vim.api.nvim_set_keymap('n', '<leader>dp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { noremap = true, silent = true, desc = "[P]revious"})
+vim.api.nvim_set_keymap('n', '<leader>dn', '<cmd>lua vim.diagnostic.goto_next()<CR>', { noremap = true, silent = true, desc = "[N]ext"})
+vim.api.nvim_set_keymap('n', '<leader>da', '<cmd>lua vim.diagnostic.setloclist()<CR>', { noremap = true, silent = true, desc = "[A]ll diagnostics"})
 
 -- Call Lazy nvim
 require("config.lazy")
