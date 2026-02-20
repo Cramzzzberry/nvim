@@ -79,12 +79,14 @@ vim.opt.termguicolors = true
 
 -- Enable LSP configuration
 vim.lsp.enable({
-  "luals",
+  "lua_ls",
   "angularls",
+  "ts_ls",
   "tsls",
-  "htmlls",
+  "html",
   "cssls",
-  "clangd"
+  "clangd",
+  "tailwindcss"
 })
 
 -- Format on save
@@ -104,10 +106,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 -- LSP Diagnostics
-vim.api.nvim_set_keymap('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true, desc = "[O]pen float" })
-vim.api.nvim_set_keymap('n', '<leader>dp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { noremap = true, silent = true, desc = "[P]revious"})
-vim.api.nvim_set_keymap('n', '<leader>dn', '<cmd>lua vim.diagnostic.goto_next()<CR>', { noremap = true, silent = true, desc = "[N]ext"})
-vim.api.nvim_set_keymap('n', '<leader>da', '<cmd>lua vim.diagnostic.setloclist()<CR>', { noremap = true, silent = true, desc = "[A]ll diagnostics"})
+vim.api.nvim_set_keymap('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>',
+  { noremap = true, silent = true, desc = "[O]pen float" })
+vim.api.nvim_set_keymap('n', '<leader>dp', '<cmd>lua vim.diagnostic.goto_prev()<CR>',
+  { noremap = true, silent = true, desc = "[P]revious" })
+vim.api.nvim_set_keymap('n', '<leader>dn', '<cmd>lua vim.diagnostic.goto_next()<CR>',
+  { noremap = true, silent = true, desc = "[N]ext" })
+vim.api.nvim_set_keymap('n', '<leader>da', '<cmd>lua vim.diagnostic.setloclist()<CR>',
+  { noremap = true, silent = true, desc = "[A]ll diagnostics" })
 
 -- Call Lazy nvim
 require("config.lazy")

@@ -17,7 +17,7 @@ return {
       float = {
         border = "rounded",
         padding = 2,
-        max_width = 100,
+        max_width = 200,
         max_height = 30,
       }
     })
