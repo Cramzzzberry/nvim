@@ -83,7 +83,8 @@ vim.lsp.enable({
   "angularls",
   "tsls",
   "htmlls",
-  "cssls"
+  "cssls",
+  "clangd"
 })
 
 -- Format on save
