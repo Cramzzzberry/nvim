@@ -13,6 +13,12 @@ return {
       default_file_explorer = true,
       view_options = {
         show_hidden = true
+      },
+      float = {
+        border = "rounded",
+        padding = 2,
+        max_width = 100,
+        max_height = 30,
       }
     })
 
