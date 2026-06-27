@@ -86,7 +86,8 @@ vim.lsp.enable({
   "html",
   "cssls",
   "clangd",
-  "tailwindcss"
+  "tailwindcss",
+  "pyright"
 })
 
 -- Format on save
@@ -104,6 +105,9 @@ vim.lsp.enable({
 --     })
 --   end
 -- })
+
+-- Change EOB symbol
+vim.opt.fillchars:append({ eob = " " })
 
 -- LSP Diagnostics
 vim.api.nvim_set_keymap('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>',

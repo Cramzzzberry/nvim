@@ -23,6 +23,6 @@ return {
     })
 
     -- open oil
-    vim.keymap.set("n", "<leader>e", ":Oil --float<cr>", { desc = "[E]xplorer", silent = true } )
+    vim.keymap.set("n", "<leader>e", ":Oil --float<cr>", { desc = "[E]xplorer", silent = true })
   end
 }
