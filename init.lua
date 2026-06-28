@@ -87,7 +87,8 @@ vim.lsp.enable({
   "cssls",
   "clangd",
   "tailwindcss",
-  "pyright"
+  "pyright",
+  "marksman"
 })
 
 -- Format on save
