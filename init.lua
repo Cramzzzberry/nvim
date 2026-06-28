@@ -21,6 +21,9 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
+-- set the column ruler
+vim.opt.colorcolumn = "120"
+
 -- Vertical navigation
 vim.keymap.set("n", "J", "<c-d>zz")
 vim.keymap.set("n", "K", "<c-u>zz")
@@ -106,6 +109,9 @@ vim.lsp.enable({
 --     })
 --   end
 -- })
+
+-- conceal the text on markdowns, etc.
+vim.wo.conceallevel = 2
 
 -- Change EOB symbol
 vim.opt.fillchars:append({ eob = "-" })
