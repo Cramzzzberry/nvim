@@ -11,6 +11,7 @@ return {
         html = { "prettierd" },
         scss = { "prettierd" },
         css = { "prettierd" },
+        python = { "black" }
       },
       format_on_save = {
         -- These options will be passed to conform.format()

@@ -107,7 +107,7 @@ vim.lsp.enable({
 -- })
 
 -- Change EOB symbol
-vim.opt.fillchars:append({ eob = " " })
+vim.opt.fillchars:append({ eob = "-" })
 
 -- LSP Diagnostics
 vim.api.nvim_set_keymap('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>',
